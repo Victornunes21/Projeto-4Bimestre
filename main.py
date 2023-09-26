@@ -1,65 +1,51 @@
+# Dicionário para armazenar informações das contas
+contas = {}
+
+# Função para criar uma conta
 def criar_conta():
     nome = input("Digite seu nome: ")
+    saldo_inicial = float(input("Digite o saldo inicial: "))
     numero_conta = input("Digite o número da conta: ")
-    saldo = float(input("Digite o saldo inicial da conta: "))
-    return {
-        'nome': nome,
-        'numero_conta': numero_conta,
-        'saldo': saldo
+
+    if numero_conta in contas:
+        print("Número de conta já existe. Tente novamente.")
+        return
+
+    contas[numero_conta] = {
+        "nome": nome,
+        "saldo": saldo_inicial
     }
 
-# Função para realizar um saque
-def sacar(conta, valor):
-    if conta['saldo'] >= valor:
-        conta['saldo'] -= valor
-        print(f"Saque de R${valor} realizado com sucesso.")
-    else:
-        print("Saldo insuficiente.")
+    print("Conta criada com sucesso!")
 
-# Função para realizar um depósito
-def depositar(conta, valor):
-    conta['saldo'] += valor
-    print(f"Depósito de R${valor} realizado com sucesso.")
-
-# Função para realizar uma transferência
-def transferir(conta_origem, conta_destino, valor):
-    if conta_origem['saldo'] >= valor:
-        conta_origem['saldo'] -= valor
-        conta_destino['saldo'] += valor
-        print(f"Transferência de R${valor} realizada com sucesso para a conta {conta_destino['numero_conta']}.")
+# Função para exibir informações da conta
+def exibir_conta(numero_conta):
+    if numero_conta in contas:
+        conta = contas[numero_conta]
+        print(f"Nome: {conta['nome']}")
+        print(f"Saldo: {conta['saldo']}")
     else:
-        print("Saldo insuficiente para a transferência.")
+        print("Conta não encontrada.")
 
 # Função principal
 def main():
-    conta1 = criar_conta()
-    conta2 = criar_conta()
-
     while True:
-        print("\nEscolha uma opção:")
-        print("1. Sacar")
-        print("2. Depositar")
-        print("3. Transferir")
-        print("4. Sair")
-        
-        escolha = input("Digite o número da opção: ")
+        print("\nBem-vindo ao banco online!")
+        print("1. Criar uma conta")
+        print("2. Exibir informações da conta")
+        print("3. Sair")
+        escolha = input("Escolha uma opção: ")
 
-        if escolha == '1':
-            valor = float(input("Digite o valor para sacar: "))
-            sacar(conta1, valor)
-        elif escolha == '2':
-            valor = float(input("Digite o valor para depositar: "))
-            depositar(conta1, valor)
-        elif escolha == '3':
-            valor = float(input("Digite o valor para transferir: "))
-            transferir(conta1, conta2, valor)
-        elif escolha == '4':
-            print("Saindo do programa.")
+        if escolha == "1":
+            criar_conta()
+        elif escolha == "2":
+            numero_conta = input("Digite o número da conta: ")
+            exibir_conta(numero_conta)
+        elif escolha == "3":
+            print("Obrigado por usar nosso banco online. Adeus!")
             break
         else:
             print("Opção inválida. Tente novamente.")
 
 if __name__ == "__main__":
     main()
-
-    
